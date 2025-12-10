@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FAQ Page</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Vollkorn:ital,wght@1,400;1,600&display=swap');
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Vollkorn", serif;
+      background-color: #f5f5f5;
+      color: #333;
+    }
+
+    /* HEADER IMAGE */
+    .header-image {
+      width: 100%;
+      height: 300px;
+      overflow: hidden;
+    }
+    .header-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    /* NAVBAR */
+    .navbar {
+      width: 100%;
+      background: #f5f5f5;
+      padding: 18px 0;
+      text-align: center;
+      transition: all 0.3s ease;
+      position: relative;
+      z-index: 999;
+    }
+    .navbar.sticky {
+      position: fixed;
+      top: 0;
+      left: 0;
+      background: #F3C8DD;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .menu a, .dropbtn {
+      margin: 0 12px;
+      font-size: 16px;
+      text-decoration: none;
+      font-weight: bold;
+      color: #3A345B;
+      cursor: pointer;
+    }
+    .menu a:hover { text-decoration: underline; }
+
+    .dropdown { position: relative; display: inline-block; }
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      top: 27px;
+      left: 0;
+      background: #F3C8DD;
+      min-width: 180px;
+      padding: 15px 0;
+      border-radius: 12px;
+      box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    .dropdown-content a {
+      display: block;
+      padding: 10px 18px;
+      color: #3A345B;
+      text-decoration: none;
+    }
+    .dropdown-content a:hover { background: #f7d7e7; }
+    .dropdown:hover .dropdown-content { display: block; }
+
+    /* FAQ */
+    .container {
+      max-width: 800px;
+      margin: 30px auto;
+      padding: 0 20px;
+    }
+    details {
+      background: white;
+      padding: 15px 20px;
+      margin: 10px 0;
+      border-radius: 10px;
+      box-shadow: 0px 2px 6px rgba(0,0,0,0.1);
+    }
+    summary {
+      font-size: 18px;
+      font-weight: bold;
+      color: #3A345B;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .q-icon { font-size: 18px; font-weight: bold; color: #3A345B; }
+
+    .answer {
+      margin-top: 10px;
+      font-size: 16px;
+      color: #3A345B;
+      line-height: 1.5;
+      display: flex;
+      font-weight: bold;
+    }
+    .a-icon {
+      margin-right: 8px;
+      font-size: 20px;
+      color: #FF7BC3;
+    }
+
+    /* FOOTER */
+    .footer {
+      background-color: #3A345B;
+      color: #F3C8DD;
+      padding: 40px 0;
+      margin-top: 60px;
+      font-family: "Times New Roman", serif;
+    }
+
+    .footer-content {
+      width: 90%;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 40px;
+    }
+
+    .footer-logo {
+      width: 280px;
+      max-width: 100%;
+      border-radius: 5px;
+    }
+
+    .footer-column {
+      font-size: 16px;
+      color: #F3C8DD;
+      line-height: 1.5;
+    }
+    .footer-column a { color: #F3C8DD; text-decoration: none; }
+    .footer-column h3 {
+      font-size: 20px;
+      margin-bottom: 10px;
+      font-weight: 600;
+      font-style: italic;
+      font-family: "Vollkorn";
+    }
+
+    /* ============================== */
+    /*        RESPONSIVE PART         */
+    /* ============================== */
+
+    /* TABLET */
+    @media (max-width: 900px) {
+      .menu a, .dropbtn {
+        margin: 0 8px;
+        font-size: 15px;
+      }
+
+      .header-image {
+        height: 240px;
+      }
+
+      summary {
+        font-size: 17px;
+      }
+
+      .footer-content {
+        flex-wrap: wrap;
+        text-align: center;
+        justify-content: center;
+      }
+
+      .footer-column {
+        width: 100%;
+        margin-bottom: 20px;
+      }
+    }
+
+    /* HP */
+    @media (max-width: 600px) {
+      .header-image {
+        height: 200px;
+      }
+
+      .navbar {
+        padding: 12px 0;
+      }
+
+      .menu a, .dropbtn {
+        display: inline-block;
+        margin: 6px 10px;
+        font-size: 14px;
+      }
+
+      summary {
+        font-size: 16px;
+      }
+
+      .answer {
+        font-size: 15px;
+      }
+
+      .footer-content {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .footer-logo {
+        width: 200px;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <div class="header-image">
+    <img src="https://i.pinimg.com/736x/f5/45/77/f5457769241efe88ea0581ade2340fa4.jpg" />
+  </div>
+
+  <!-- NAVBAR -->
+  <div class="navbar" id="navbar">
+    <div class="menu">
+
+      <a href="Celyndra Tarot - Home.html">Home</a>
+
+      <div class="dropdown">
+        <a class="dropbtn">About</a>
+        <div class="dropdown-content">
+          <a href="about_us.html">About Us</a>
+          <a href="Celyndra Tarot - About Tarot.html">About Tarot</a>
+        </div>
+      </div>
+
+      <div class="dropdown">
+        <a class="dropbtn">Pick A Reading</a>
+        <div class="dropdown-content">
+          <a href="Celyndra Tarot - Heart Message.html">Heart Message</a>
+          <a href="Celyndra Tarot - Soul Mirror.html">Soul Mirror</a>
+          <a href="Celyndra Tarot - Path and Prosperity.html">Path & Prosperity</a>
+        </div>
+      </div>
+
+      <a href="Celyndra Tarot - FAQ.html">FAQ</a>
+      <a href="More Insight.html">More Insight</a>
+
+    </div>
+  </div>
+
+  
+<!-- FAQ -->
+<div class="container" id="faq">
+
+  <h1 style="text-align:center; color:#3A345B;">FAQ</h1>
+  <div style="text-align:center; font-style: italic; margin-bottom: 18px; color:#3A345B;">
+    ☼ Frequently Asked Questions ☾
+  </div>
+
+  <!-- 1 -->
+  <details>
+    <summary><span class="q-icon">✦</span> Q: Kalian kan bikin website itu buat tugas kuliah kalian dan kalian bilang bebas temanya, kenapa dari banyaknya ide website kalian pilih tarot??</summary>
+    <div class="answer">
+      <span class="a-icon">❖</span>
+      A: Sebenernya kita emang dari awal udah pengennya bikin website tarot karena emang tujuannya buat have fun aja dan ada gamenya buat seru-seruan terus kita jadi tau juga tentang tarot lebih mendalam lagi tanpa didasari emosional jadi bukan yang percaya gitu tapi buat main kayak tes mbti aja!
+    </div>
+  </details>
+
+  <!-- 2 -->
+  <details>
+    <summary><span class="q-icon">✦</span> Q: Setelah mainin gamenya, saya terhibur tapi saya ada pertanyaan, jadi apa kartu tarot yang kalian pilih ini bener2 dari sumber asli kah dan spiritualnya asli apa gimana? Saya takut jadi syirik hehe..</summary>
+    <div class="answer">
+      <span class="a-icon">❖</span>
+      A: Kita cari tahu tentang tarot itu sumber utamanya dari web labyrinthos.co, itu websitenya berisi tentang semua tarot dan dia rapih banget penyusunannya, dia salah satu website yang terkenal juga karena hal-hal fantastis dan mistis gitu. Untuk keaslian sumber, itu tergantung kepercayaan pengguna masing-masing, tetapi karena tujuan dari kami membuat website ini hanya untuk "main," kemudian kami juga tidak ada intensi untuk percaya, jadi menurut kami selama pengguna tidak percaya si jatuhnya bukan syirik yaaa.
+    </div>
+  </details>
+
+  <!-- 3 -->
+  <details>
+    <summary><span class="q-icon">✦</span> Q: Ada ga alasan di balik kalian milih 10 kartu tarot itu? Kan kalo lihat di About Tarot ternyata jumlahnya banyak, nah kenapa kalian pilih 10 aja dan kenapa 10 kartu itu yang kalian pilih?</summary>
+    <div class="answer">
+      <span class="a-icon">❖</span>
+      A: Kita ga ada alasan yang spesifik atau gimana, itu semua karena kita ngerasa 10 kartu itu makna dan gambarnya keren aja jadi kita pilih wkwk. Terus kita menyesuaikan kartunya cocok dipakai buat kategori game kita atau engga, karena ada beberapa jenis kartu tarot maknanya harus terhubung sama kartu tarot lain jadi ga bisa kita pake. Begituuu~
+    </div>
+  </details>
+
+  <!-- 4 -->
+  <details>
+    <summary><span class="q-icon">✦</span> Q: Ini bakal ada update ga entar? Kayak ada perubahan fitur baru, game baru, dan lain-lain??</summary>
+    <div class="answer">
+      <span class="a-icon">❖</span>
+      A: Kita belum kepikiran sih... kemungkinan engga karena ini emang buat tugas kuliah aja. Cuman kalo kalian ada request sih boleh-boleh aja semisal ada fitur yang kalian tertarik buat website kita!
+    </div>
+  </details>
+
+  <!-- 5 -->
+  <details>
+    <summary><span class="q-icon">✦</span> Q: Kan di Pick Reading dapat 3 kartu random terus di explanation udah ada artinya. Nah bedanya sama yang di More Insight apa? Itu arti juga kah atau beda karena kata-katanya ada beda dan ada yang sama?</summary>
+    <div class="answer">
+      <span class="a-icon">❖</span>
+      A: Sama aja kok! Adanya page More Insight ini itu buat penjelasan lebih lanjut aja kalo kalian pengen tahu lebih soal kartu yang kalian dapet, karena di Pick a Reading kan hanya penjelasan singkat aja.
+    </div>
+  </details>
+
+</div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-content">
+
+      <div class="footer-column">
+        <img src="https://i.pinimg.com/736x/11/c0/33/11c0338534b976e89de916808d1da7b2.jpg" class="footer-logo" />
+      </div>
+
+      <div class="footer-column">
+        <h3>Featured Link</h3>
+        <a href="Celyndra Tarot - Home.html">Home</a><br />
+        <a href="about_us.html">About Us</a><br />
+        <a href="Celyndra Tarot - About Tarot.html">About Tarot</a><br />
+        <a href="Celyndra Tarot - FAQ.html">FAQ</a><br />
+        <a href="More Insight.html">More Insight</a>
+      </div>
+
+      <div class="footer-column">
+        <h3>Contact Us</h3>
+        Fakultas Ilmu Pengetahuan Budaya<br />
+        Universitas Indonesia<br />
+        Jl. Prof. DR. Selo Soemardjan, Depok<br /><br />
+        <a href="mailto:4minionsilpus@gmail.com">4minionsilpus@gmail.com</a>
+      </div>
+
+    </div>
+  </footer>
+
+  <script>
+    const navbar = document.getElementById("navbar");
+    const headerImage = document.querySelector(".header-image");
+
+    window.addEventListener("scroll", () => {
+      let headerHeight = headerImage.offsetHeight;
+
+      if (window.scrollY >= headerHeight) {
+        navbar.classList.add("sticky");
+      } else {
+        navbar.classList.remove("sticky");
+      }
+    });
+  </script>
+
+</body>
+</html>

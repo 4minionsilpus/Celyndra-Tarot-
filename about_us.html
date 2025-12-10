@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About Us Page</title>
+
+    <style>
+        :root {
+            --purple: #3A345B;
+            --pink: #F3C8DD;
+        }
+
+        /* Hentikan scroll kiri-kanan */
+        html,
+        body {
+            overflow-x: hidden;
+            width: 100%;
+            touch-action: pan-y;
+        }
+
+        /* ---------------- HEADER ---------------- */
+        .header-foto {
+    position: relative;
+    width: 100%;
+    height: 60vh;         /* tinggi header = 60% viewport */
+    overflow: hidden;
+}
+
+.header-foto img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;    /* gambar selalu memenuhi area header */
+    object-position: center;
+    display: block;
+}
+
+        /* ---------------- NAVBAR ---------------- */
+        .navbar {
+            width: 100%;
+            background: white;
+            padding: 18px 0;
+            text-align: center;
+            position: relative;
+            transition: all 0.3s ease;
+            box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+            z-index: 999;
+        }
+
+        .navbar.sticky {
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: var(--pink);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .menu a,
+        .dropbtn {
+            margin: 0 12px;
+            font-size: 16px;
+            text-decoration: none;
+            color: var(--purple);
+            font-weight: bold;
+            cursor: pointer;
+            font-family: "Vollkorn", serif !important;
+            font-style: italic !important;
+        }
+
+        .menu a:hover,
+        .dropbtn:hover {
+            text-decoration: underline;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 27px;
+            left: 0;
+            background: #F3C8DD;
+            /* <-- GANTI JUGA DI SINI (dropdown bg) */
+            min-width: 180px;
+            padding: 15px 0;
+            border-radius: 12px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+        }
+
+        .dropdown-content a {
+            display: block;
+            padding: 10px 18px;
+            text-align: left;
+            color: #3A345B;
+            text-decoration: none;
+            font-weight: normal;
+        }
+
+        /* warna pas hover item dropdown */
+        .dropdown-content a:hover {
+            background: #F3C8DD;
+            /* <-- dan DI SINI */
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* ---------------- CAROUSEL ---------------- */
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            max-width: 750px;
+            margin: 120px auto 40px auto;
+            overflow: visible;
+        }
+
+        .carousel-track {
+            display: flex;
+            transition: transform 0.4s ease-in-out;
+            /* gap: 30px; */
+            
+        }
+
+       .carousel-item {
+    width: 100%;           /* FULL width mengikuti container */
+    max-width: 750px;      /* sama dengan container */
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    background: none;
+}
+
+
+        .carousel-item img {
+            width: auto;
+            height: 400px;
+            object-fit: cover;
+            background: white;
+    margin: 0 auto;
+        }
+
+        /* --- SWIPE BUTTONS --- */
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--purple);
+            color: white;
+            padding: 18px;
+            border: none;
+            cursor: pointer;
+            font-size: 22px;
+            border-radius: 10px;
+            opacity: 0.9;
+            z-index: 999;
+        }
+
+        .carousel-btn:hover {
+            opacity: 1;
+        }
+
+        #prevBtn {
+            left: -10px;
+        }
+
+        #nextBtn {
+            right: -10px;
+        }
+
+        /* ---------------- FOOTER ---------------- */
+        .footer {
+            background-color: #3A345B;
+            color: #F3C8DD;
+            padding: 40px 0;
+            margin-top: 60px;
+            font-family: "Times New Roman", serif;
+            font-style: normal;
+        }
+
+        .footer-content {
+            width: 90%;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .footer-image img {
+            width: 340px;
+            border-radius: 5px;
+        }
+
+        .footer-column,
+        .footer-column a {
+            font-size: 16px;
+            color: #F3C8DD;
+            text-decoration: none;
+            line-height: 1.5;
+        }
+
+        .footer-column h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            font-weight: 600;
+            font-family: "Vollkorn", serif;
+            font-style: italic;
+            color: #F3C8DD;
+        }
+        
+    </style>
+
+</head>
+
+<body>
+
+    <!-- ================= HEADER ================= -->
+    <div class="header-foto">
+        <img src="https://i.pinimg.com/736x/f5/45/77/f5457769241efe88ea0581ade2340fa4.jpg" alt="header">
+    </div>
+
+    <!-- ================= NAVBAR ================= -->
+    <div class="navbar" id="navbar">
+        <div class="menu">
+
+            <a href="Celyndra Tarot - Home.html">Home</a>
+
+            <div class="dropdown">
+                <span class="dropbtn">About</span>
+                <div class="dropdown-content">
+                    <a href="about_us.html">About Us</a>
+                    <a href="Celyndra Tarot - About Tarot.html">About Tarot</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <span class="dropbtn">Pick a Reading</span>
+                <div class="dropdown-content">
+                    <a href="Celyndra Tarot - Heart Message.html">Heart Message</a>
+                    <a href="Celyndra Tarot - Soul Mirror.html">Soul Mirror</a>
+                    <a href="Celyndra Tarot - Path and Prosperity.html">Path & Prosperity</a>
+                </div>
+            </div>
+
+            <a href="Celyndra Tarot - FAQ.html">FAQ</a>
+            <a href="More Insight.html">More Insight</a>
+
+        </div>
+    </div>
+
+    <!-- ================= CAROUSEL ================= -->
+    <div class="carousel-container">
+
+        <button class="carousel-btn" id="prevBtn">&#10094;</button>
+        <button class="carousel-btn" id="nextBtn">&#10095;</button>
+
+        <div class="carousel-track" id="carouselTrack">
+
+            <!-- Duplicate last -->
+            <div class="carousel-item"><img
+                    src="https://i.pinimg.com/736x/33/e9/72/33e9728fdb1232a0000049b4319e39f3.jpg"></div>
+
+            <!-- Asli -->
+            <div class="carousel-item"><img
+                    src="https://i.pinimg.com/736x/c7/a2/5c/c7a25c97bcb3a4bd3e9cdcf1fd9cf5e8.jpg"></div>
+            <div class="carousel-item"><img
+                    src="https://i.pinimg.com/736x/52/61/87/526187a6f87fcd8993891030efaeb5f3.jpg"></div>
+            <div class="carousel-item"><img
+                    src="https://i.pinimg.com/736x/fc/1b/28/fc1b2888beacea615bc800962029eb09.jpg"></div>
+            <div class="carousel-item"><img
+                    src="https://i.pinimg.com/736x/33/e9/72/33e9728fdb1232a0000049b4319e39f3.jpg"></div>
+
+            <!-- Duplicate first -->
+            <div class="carousel-item"><img
+                    src="https://i.pinimg.com/736x/c7/a2/5c/c7a25c97bcb3a4bd3e9cdcf1fd9cf5e8.jpg"></div>
+
+        </div>
+    </div>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="footer">
+        <div class="footer-content">
+
+            <div class="footer-image">
+                <img src="https://i.pinimg.com/736x/11/c0/33/11c0338534b976e89de916808d1da7b2.jpg">
+            </div>
+
+            <div class="footer-column">
+                <h3>Featured Link</h3>
+                <a href="Celyndra Tarot - Home.html">Home</a><br>
+                <a href="about_us.html">About Us</a><br>
+                <a href="Celyndra Tarot - About Tarot.html">About Tarot</a><br>
+                <a href="Celyndra Tarot - FAQ.html">FAQ</a><br>
+                <a href="More Insight.html">More Insight</a>
+            </div>
+
+            <div class="footer-column">
+                <h3>Contact Us</h3>
+                Fakultas Ilmu Pengetahuan Budaya<br />
+                Universitas Indonesia<br />
+                Jl. Prof. DR. Selo Soemardjan, Depok<br /><br />
+                <a href="mailto:4minionsilpus@gmail.com">4minionsilpus@gmail.com</a>
+            </div>
+
+        </div>
+    </footer>
+
+    <!-- ================= SCRIPT ================= -->
+    <script>
+        /* Sticky navbar */
+        const navbar = document.getElementById("navbar");
+        const headerImage = document.querySelector(".header-foto");
+
+        window.addEventListener("scroll", () => {
+            let headerHeight = headerImage.offsetHeight;
+            if (window.scrollY >= headerHeight) {
+                navbar.classList.add("sticky");
+            } else {
+                navbar.classList.remove("sticky");
+            }
+        });
+
+        /* =============== INFINITE CAROUSEL =============== */
+
+        let track = document.getElementById("carouselTrack");
+        let items = track.children;
+
+        let index = 1;
+        let slideWidth;
+
+        window.onload = () => {slideWidth = document.querySelector(".carousel-container").offsetWidth;
+
+            track.style.transform = `translateX(-${index * slideWidth}px)`;
+
+        };
+
+        document.getElementById("nextBtn").addEventListener("click", () => {
+            index++;
+            slide();
+        });
+
+        document.getElementById("prevBtn").addEventListener("click", () => {
+            index--;
+            slide();
+        });
+
+        function slide() {
+            track.style.transition = "0.4s ease-in-out";
+            track.style.transform = `translateX(-${index * slideWidth}px)`;
+
+            track.addEventListener("transitionend", () => {
+
+                if (index === items.length - 1) {
+                    track.style.transition = "none";
+                    index = 1;
+                    track.style.transform = `translateX(-${index * slideWidth}px)`;
+                }
+
+                if (index === 0) {
+                    track.style.transition = "none";
+                    index = items.length - 2;
+                    track.style.transform = `translateX(-${index * slideWidth}px)`;
+                }
+            });
+        }
+    </script>
+
+</body>
+
+</html>

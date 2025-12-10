@@ -1,0 +1,1189 @@
+<!DOCTYPE html>  <html lang="id">  
+<head>  
+<meta charset="utf-8" />  
+<meta name="viewport" content="width=device-width,initial-scale=1" />  
+<title>Celyndra Tarot – More Insight</title>  <!-- FONT: Vollkorn Italic -->  <link href="https://fonts.googleapis.com/css2?family=Vollkorn:ital,wght@1,400;1,600&display=swap" rel="stylesheet">  
+<style>  
+  :root{  
+    --bg: #3A;  
+    --accent: #F3C8DD;  
+    --text: #3A345B;  
+    --card-shadow: 0 8px 28px rgba(58,52,91,0.14);  
+    --radius: 18px;  
+  }  
+  
+  html,body{  
+    height:100%;  
+    margin:0;  
+    background:var(--bg);  
+    font-family: "Vollkorn", serif;  
+    font-style: italic;  
+    color: var(--text);  
+    -webkit-font-smoothing:antialiased;  
+    -moz-osx-font-smoothing:grayscale;  
+  }  
+  
+  /* NAVBAR (compatible dengan homepage) */  
+  
+
+.navbar{
+  width:100%;
+  position: relative;
+  z-index:9999;
+  transition: background .18s ease, box-shadow .18s ease, padding .18s ease;
+  background: transparent;           /* default: transparan supaya header terlihat */
+  box-shadow: none;
+  padding: 14px 0;
+}
+
+.navbar-inner{
+  max-width:1100px;
+  margin:0 auto;
+  padding: 0 18px;
+  display:flex;
+  justify-content:center;            /* tengahin menu secara default */
+  align-items:center;
+  gap: 18px;
+}
+
+.navbar.sticky{
+  position: fixed;
+  top:0;
+  left:0;
+  right:0;
+  background: linear-gradient(90deg, rgba(243,200,221,0.98) 0%, rgba(243,200,221,0.85) 100%);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+  padding: 10px 0;
+  backdrop-filter: blur(4px);
+}
+
+.menu{
+  display:flex;
+  gap: 22px;
+  align-items:center;
+  justify-content:center;
+  flex-wrap:wrap;
+  line-height:1;
+}
+
+.menu a, .menu .dropbtn {
+  color: var(--text);
+  font-weight:700;
+  font-style: italic;
+  font-size:16px;
+  text-decoration: none;
+  padding: 6px 4px;
+  transition: color .15s ease, transform .12s ease;
+}
+
+.menu a:hover, .menu .dropbtn:hover {
+  text-decoration: underline;
+  transform: translateY(-1px);
+}
+
+.dropdown{ position:relative; display:inline-block; }
+
+.dropdown-content{
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  /* ganti putih ke pink lembut (sesuaikan alpha kalau mau lebih solid) */
+  background: linear-gradient(180deg, rgba(243,200,221,0.98), rgba(243,200,221,0.90));
+  box-shadow: 0 10px 30px rgba(58,52,91,0.10);
+  border-radius: 12px;
+  padding: 10px 12px;
+  min-width: 200px;
+  z-index: 1200;
+  backdrop-filter: blur(4px);
+}
+
+.dropdown-content a{
+  display: block;
+  padding: 10px 12px;
+  color: #3A345B;
+  text-decoration: none;
+
+  font-weight: 400 !important;   /* NORMAL, bukan bold */
+  font-style: normal;            /* tidak italic */
+  
+  line-height: 1.6;
+  transition: background .15s ease;
+}
+
+
+.dropdown-content a:hover{
+  background: rgba(58,52,91,0.05);
+  border-radius: 8px;
+}
+
+.dropdown:hover .dropdown-content{ display:block; }
+
+.navbar.sticky .menu a, .navbar.sticky .menu .dropbtn {
+  color: #3A345B;
+}
+
+@media (max-width:680px){
+  .navbar-inner{ padding:0 12px; }
+  .menu{ gap:12px; }
+}
+  .page-desc{  
+    width:90%;  
+    margin: 0 auto 20px;  
+    color: rgba(58,52,91,0.9);  
+    font-size:16px;  
+    line-height:1.6;  
+    max-width:920px;  
+  }  
+  
+  /* HORIZONTAL CAROUSEL (scroll-snap) */  
+  .carousel {  
+    width: 100%;  
+    height: calc(100vh - 160px); /* leave space for navbar/footer */  
+    display: flex;  
+    overflow-x: auto;  
+    scroll-snap-type: x mandatory;  
+    -webkit-overflow-scrolling: touch;  
+    gap: 28px;  
+    padding: 28px;  
+    box-sizing: border-box;  
+  }  
+  
+  .carousel::-webkit-scrollbar { height: 10px; }  
+  .carousel::-webkit-scrollbar-thumb { background: rgba(58,52,91,0.15); border-radius: 10px; }  
+  
+  .insight-panel {  
+    scroll-snap-align: center;  
+    flex: 0 0 84%; /* width of each panel (adjust for visible peek) */  
+    max-width: 980px;  
+    background: linear-gradient(180deg, #f3c8dd 0%, #f3c8dd 60%);  
+    border-radius: var(--radius);  
+    box-shadow: var(--card-shadow);  
+    padding: 28px 30px;  
+    box-sizing: border-box;  
+    overflow-y: auto;  
+  }  
+  
+  /* Make panels taller on wide screens */  
+  @media (min-width: 1000px) {  
+    .carousel { height: calc(100vh - 180px); }  
+    .insight-panel { flex: 0 0 70%; }  
+  }  
+  
+  /* CONTENT STYLES */  
+  .card-title {  
+    font-size: 26px;  
+    margin: 6px 0 12px;  
+    font-weight:700;  
+    color: var(--text);  
+  }  
+  .section-subtitle {  
+    font-size: 18px;  
+    font-weight:700;  
+    margin-top:14px;  
+    margin-bottom:6px;  
+  }  
+  .section-text {  
+    font-size:16px;  
+    line-height:1.7;  
+    color: var(--text);  
+    white-space: pre-wrap; /* preserve line breaks */  
+  }  
+  
+  /* NAV BUTTONS (left/right) */  
+  .nav-controls {  
+    position: fixed;  
+    bottom: 28px;  
+    left: 50%;  
+    transform: translateX(-50%);  
+    display: flex;  
+    gap:12px;  
+    z-index: 1200;  
+  }  
+  .nav-btn {  
+    background: var(--accent);  
+    border: none;  
+    padding: 10px 14px;  
+    border-radius: 12px;  
+    font-weight: bold;  
+    cursor: pointer;  
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12);  
+    color: var(--text);  
+  }  
+  .nav-btn:active { transform: translateY(1px); }  
+  
+  /* DOTS */  
+  .dots {  
+    display:flex;  
+    gap:8px;  
+    align-items:center;  
+  }  
+  .dot {  
+    width:10px;  
+    height:10px;  
+    background: rgba(58,52,91,0.16);  
+    border-radius:50%;  
+  }  
+  .dot.active {  
+    background: var(--text);  
+  }  
+  
+  /* FOOTER SMALL */  
+  .mini-footer {  
+    width:100%;  
+    padding:18px 0;  
+    text-align:center;  
+    color: rgba(58,52,91,0.7);  
+    font-size:14px;  
+    box-sizing:border-box;  
+  }  
+  
+  /* small screens adjustments */  
+  @media (max-width:600px){  
+    .insight-panel { flex: 0 0 92%; padding:20px; }  
+    .page-title { font-size:22px; }  
+  }  
+</style>  
+</head> 
+
+<body>    <!-- Header Image placeholder (kejujuran: homepage kamu punya header image,  
+       di sini kita pertahankan tinggi supaya sticky navbar trigger bisa sama)  
+  -->    
+       <div class="header-foto">
+  <img src="https://i.ibb.co.com/rf417ZZx/header.jpg" alt="joko">
+  <div class="navbar" id="navbar">
+  <div class="navbar-inner">
+    <div class="menu">
+      <a href="Celyndra Tarot - Home.html">Home</a>
+
+      <div class="dropdown">
+        <span class="dropbtn">About</span>
+        <div class="dropdown-content">
+          <a href="about_us.html">About Us</a>
+          <a href="Celyndra Tarot - About Tarot.html">About Tarot</a>
+        </div>
+      </div>    
+      <div class="dropdown">
+        <span class="dropbtn">Pick A Reading</span>
+        <div class="dropdown-content">
+          <a href="Celyndra Tarot - Heart Message.html">Heart Message</a>
+          <a href="Celyndra Tarot - Soul Mirror.html">Soul Mirror</a>
+          <a href="Celyndra Tarot - Path and Prosperity.html">Path & Prosperity</a>
+        </div>
+      </div>
+
+      <a href="Celyndra Tarot - FAQ.html">FAQ</a>
+      <a href="More Insight.html">More Insight</a>
+    </div>
+  </div>
+</div>
+</div>
+  <main>  
+    <h1 class="page-title">More Insight - Full Card Meanings</h1>  
+    <p class="page-desc">  
+      
+    </p>  <!-- CAROUSEL -->  
+<div class="carousel" id="carousel" tabindex="0">  
+
+  <!-- PANEL 1: The Chariot -->  
+  <section class="insight-panel" data-index="0" aria-label="The Chariot">  
+    <div class="card-title">The Chariot</div>  
+
+    <div class="card-image">
+  <img src="https://i.pinimg.com/736x/e6/b4/a1/e6b4a1b6efaf79784689f95f7b11f020.jpg" alt="The Chariot Card"style="width:150px; height:auto;">
+</div>
+
+
+    <div class="section-subtitle">Love Interest :</div>  
+    <div class="section-text">
+
+Pasangan kamu orang yang memiliki mental pejuang, a soldier, prinsip atau pendirian yang kuat. Ketika dia menginginkan sesuatu dia tanpa ba bi bu langsung ngegas, dia bakal fight demi pasangannya, demi mempertahankan hubungannya. Energi pasangan kamu ini dominan tapi dalam artian positif dan ga toxic.
+</div>
+
+<div class="section-subtitle">Dampak&gt;</div>  
+    <div class="section-text">
+
+[Positive/Cocok] Kamu cocok banget sama pasangan kamu karena kamu suka orang yang tegas dan punya standar yang konsisten, kamu ngerasa hubungan kamu bergerak di masa depan bukan terpendam di masa lalu, orang yang mau bergerak maju dan berkembang.
+
+[Negative/Gak cocok] kamu ngerasa diri kamu muak menjadi submisif dalam sebuah hubungan, kamu mau hubungan yang slowburn, nah kamu ga cocok bgt sama padangan kamu itu.
+</div>
+
+<div class="section-subtitle">Self-Character :</div>  
+    <div class="section-text">
+
+Kamu adalah orang yang bertekad kuat, gak gampang goyah, dan konsisten abiz. Daya kontrol kamu kuat, baik dalam fisik, maupun emosi. Kamu bukan tipe orang yang mudah nyerah karena hanya tekanan.
+</div>
+
+<div class="section-subtitle">Career-Path :</div>  
+    <div class="section-text">
+
+Karena kamu orang yang kuat dan keras, kamu cocok banget di bidang Militer, Kepolisian (jangan di indo, ke ln aja)
+</div>
+</section>
+
+<!-- PANEL 2: The Fool -->  
+  <section class="insight-panel" data-index="1" aria-label="The Fool">  
+    <div class="card-title">The Fool</div>  
+
+    <div class="card-image">
+  <img src="https://i.pinimg.com/736x/7f/84/3c/7f843cb4ad7dbb686675598aaf2a0ae6.jpg" alt="The Fool Card"style="width:150px; height:auto;">
+</div>
+
+
+    <div class="section-subtitle">Love-Interest :</div>  
+    <div class="section-text">
+
+Pasangan kamu adalah orang yang spontan, energinya ringan (ga yang meledak-ledak), dan kepoan banget. Jadi, semua hal tentang kamu itu dia harus tau kalo ada yang kamu sembunyiin ntar dia ngambek, terus dia juga ada rutinitas keseharian yang kamu harus ikutin, kebahagian dia juga simple.
+</div>
+
+<div class="section-subtitle">Dampak&gt;</div>  
+    <div class="section-text">
+
+[Positive/Cocok] Kamu suka hubungan yang ga ribet, kamu nyaman banget selama berhubungan sama dia, kamu jadi ikut open-minded gegara pasangan kamu ini.
+
+[Negative/Gak cocok] Kamu ngerasa hubungan kamu ga jelas arahnya mau ke mana, berasa di ghosting, atau berat sebelah, selama berhubungan sama dia kamu jadi insekyuran.
+</div>
+
+<div class="section-subtitle">Self-Character :</div>  
+    <div class="section-text">
+
+Kamu orang yang santai dan fokus sama masa kini, bukan orang yang punya banyak planning dan menikmati hal yang ada di depan mata. Karena kamu ga terpaku dengan masa depan kamu ga takut untuk mencoba hal2 baru.
+</div>
+
+<div class="section-subtitle">Career-Path :</div>  
+    <div class="section-text">
+
+Kamu suka mencoba hal2 baru dan cocok-cocok aja di kamu, you are the type of person who enjoys work! Jadi kamu cocok di semua profesi berbagai bidang.
+</div>
+</section>
+
+<!-- PANEL 3: The Tower -->  
+  <section class="insight-panel" data-index="2" aria-label="The Tower">  
+    <div class="card-title">The Tower</div>  
+
+     <div class="card-image">
+  <img src="https://i.pinimg.com/736x/9e/4e/af/9e4eaf413d2e00124fd1e868c88c3132.jpg" alt="The Tower Card"style="width:150px; height:auto;">
+</div>
+
+
+    <div class="section-subtitle">Love Interest :</div>  
+    <div class="section-text">
+
+Pasangan [kamu] ini dateng ke kehidupan kamu ibarat angin badai, tiba-tiba, dan ga diundang. Pasangan kamu adalah dalang yang mengubah kehidupan kamu yang awalanya tenang2 aja jadi chaos dan bikin kamu sadar kalo kamu selama ini ngejalanin hubungan sama dia, kamu jatuh cintanya sendirian, galau sendirian, dan berat sebelah, super-duper toxic.
+</div>
+
+<div class="section-subtitle">Dampak&gt;</div>  
+    <div class="section-text">
+
+[Positive/Cocok] BUKAN COCOK INI SIH tapi jatuhnya setelah berhubungan sm dia, kamu jadi sadar kalo kamu tuh worth it, kamu lebih pantas dihargai dan disayang, dan kek "ngapain gw ngabisin waktu gw sama tu org" udah langsung cabut aja dan jangan pernah berhubungan lagi sama itu org.
+
+[Negative/Gak cocok] udh disebutin di atas tadi^^ kalo dirinciin satu-satu kebanyakan keburukannya.
+</div>
+
+<div class="section-subtitle">Self-Character :</div>  
+    <div class="section-text">
+
+Kamu adalah orang yang bernergi negatif, disturbing, tetapi powerful. Kamu jago dalam mematahkan prinsip dan pola hidup seseorang (anjir jahat bgt)
+</div>
+
+<div class="section-subtitle">Career-Path :</div>  
+    <div class="section-text">
+
+kebaikan yang kamu punya, kmu itu adaptif dan jago bersosialisasi, jadi kamu cocok di profesi yang berhubungan dengan start-up.
+</div>
+</section>
+
+<!-- PANEL 4: The Devil -->  
+  <section class="insight-panel" data-index="3" aria-label="The Devil">  
+    <div class="card-title">The Devil</div>  
+
+    <div class="card-image">
+  <img src="https://i.pinimg.com/736x/4b/36/83/4b3683833dfd545f0d0bfc76da20492e.jpg" alt="The Devil Card"style="width:150px; height:auto;">
+</div>
+
+
+    <div class="section-subtitle">Love Interest :</div>  
+    <div class="section-text">
+
+Pasangan [kamu] punya perasaan yang kuat banget sama kamu dan tipe orang yang bikin kamu ovt sama setiap perlakuan dia ke kamu, bikin kamu susah lepas sama dia dan agak complicated hubungannya, kadang toxic kadang engga. Pasangan [kamu] pinter buat build up karisma bikin kamu jadi klepek-klepek sama dia, bahkan bucin (buta cinta)
+</div>
+
+<div class="section-subtitle">Dampak&gt;</div>  
+    <div class="section-text">
+
+[Positive/Cocok] emosi kamu jadi lebih terjaga dan terkontrol karena pasangan kamu jago buat nanganin kamu, itu bikin kamu siap buat ngadepin situasi yang naik turun.
+
+[Negative/Gak cocok] setelah komitmen sama dia justru bukannya upgrade diri kamu jadi downgrade, kamu lebih insekyur dan ga pantes buat pasangan kamu. Selain itu, kamu jadi gampang labil atau mood-swing.
+</div>
+
+<div class="section-subtitle">Self-Character :</div>  
+    <div class="section-text">
+
+Kamu punya aura +1000 alias kuat banget, bisa melebihi the emperor, passion kamu gede, super ambis, dan kalo kamu udah pengen sesuatu kamu harus dapet, bisa atau engga, harus dapet! Kamu persuasif dan sadar atau engga kamu suka manipulasi orang buat ikutin yang kamu mau.
+</div>
+
+<div class="section-subtitle">Career-Path :</div>  
+    <div class="section-text">
+
+keinginan dan ambil kamu itu super tinggi, kamu orang yang rela ngasih tenaga besar demi pekerjaan kamu walaupun itu ngerugiin kamu tetapi demi tujuan yang kamu mau kamu rela ngrorbanin banyak hal, profesi yang cocok buat kamu itu membangun bisnis atau bagian dari tim marketing
+</div>
+</section>
+
+<!-- PANEL 5: The Empress -->
+<section class="insight-panel" data-index="4" aria-label="The Empress">
+  <div class="card-title">The Empress</div>
+
+  <div class="card-image">
+  <img src="https://i.pinimg.com/736x/ee/0f/d8/ee0fd8fed3020606a0d11988073c91a5.jpg" alt="The Empress Card"style="width:150px; height:auto;">
+</div>
+
+  <div class="section-subtitle">Love Interest :</div>
+  <div class="section-text">
+Pasangan [kamu] adalah orang yang lembut, hangat, dan soft-spoken. Dia orang yang penuh kasih dan perhatian banget sama kamu, itu bikin kamu ngerasa disayang banget dan diterima apa adanya. Selama berkomitmen sama dia, kamu merasa seperti ada perasaan "rumah" — tempat kamu pulang adalah pasangan kamu.
+  </div>
+
+  <div class="section-subtitle">Dampak&gt;</div>
+  <div class="section-text">
+[Positive/Cocok] Kamu ngerasa ini hubungan terbaik buat kamu karena stabil dan hampir sempurna, sampai kamu ngerasa pengen hidup selamanya sama pasangan kamu.
+  
+[Negative/Ga cocok] Sama seperti The World, masalahnya ada di kepribadian kamu. Berbeda dengan pasangan kamu yang memberikan afeksi secara nyata, kamu cenderung gengsi untuk mengekspresikan sayang, alhasil pasangan kamu capek dan memilih mengakhiri hubungan.
+  </div>
+
+  <div class="section-subtitle">Self-Character :</div>
+  <div class="section-text">
+Kamu adalah orang yang punya energi murni, penyayang, dan intuitif. Kehadiran kamu bikin orang lain nyaman dan sayang banget sama kamu.
+  </div>
+
+  <div class="section-subtitle">Career-Path :</div>
+  <div class="section-text">
+Kamu berkembang melalui kreativitas, intuisi, dan produktivitas. Profesi yang cocok: artist, content creator, atau pekerjaan yang berkaitan dengan parenting.
+  </div>
+</section>
+
+<!-- PANEL 6: The Temperance -->
+<section class="insight-panel" data-index="5" aria-label="The Temperance">
+  <div class="card-title">The Temperance</div>
+
+  <div class="card-image">
+  <img src="https://i.pinimg.com/736x/60/6c/79/606c79ed9880f045409f02504733df12.jpg" alt="The Temperance Card"style="width:150px; height:auto;">
+</div>
+
+  <div class="section-subtitle">Love Interest :</div>
+  <div class="section-text">
+Pasangan [kamu] itu orangnya kalem, sabar, dan emotionally-stable. Mereka hadir di kehidupan kamu sebagai penyeimbang, dan selama menjalin hubungan sama pasangan kamu berasa "healing."
+  </div>
+
+  <div class="section-subtitle">Dampak&gt;</div>
+  <div class="section-text">
+[Positive/Cocok] Kalau kamu suka hubungan yang stabil dan terarah, kamu cocok banget sama pasangan kamu!
+
+[Negative/Gak cocok] Kamu merasa hubungan kamu terlalu lambat, kamu jadi gampang emosi dan ga sabaran — itu tanda kamu ga cocok sama dia.
+  </div>
+
+  <div class="section-subtitle">Self-Character :</div>
+  <div class="section-text">
+Kamu dideskripsikan sebagai orang yang bijak dan bisa menjadi mediator. Kamu jago nenangin diri sendiri, suka kedamaian, dan selalu jadi pelerai saat ada konflik. Selain itu, kamu tahu cara menggabungkan hal-hal yang awalnya ga bisa bersatu jadi bisa nyambung karena kamu.
+  </div>
+
+  <div class="section-subtitle">Career-Path :</div>
+  <div class="section-text">
+Orang seperti kamu cocok bekerja di bidang kesehatan, pendidikan, dan industri kreatif.
+  </div>
+</section>
+
+<!-- PANEL 7: The World -->
+<section class="insight-panel" data-index="6" aria-label="The World">
+  <div class="card-title">The World</div>
+
+  <div class="card-image">
+  <img src="https://i.pinimg.com/736x/6f/85/75/6f8575ffd31dde18f94657c26995f1e0.jpg" alt="The World Card"style="width:150px; height:auto;">
+</div>
+
+  <div class="section-subtitle">Love Interest :</div>
+  <div class="section-text">
+Pasangan [kamu] itu sifatnya dewasa banget, bahkan kadang ga sesuai umur saking dewasanya. Dia bijak, bisa nge-manage emosi dan perilakunya, dan sudah berada di fase “matang” dalam menjalin hubungan atau percintaan.
+  </div>
+
+  <div class="section-subtitle">Dampak&gt;</div>
+  <div class="section-text">
+[Positive/Cocok] Pasangan kamu bikin kamu ikut kebawa sifat dewasanya. Tanpa sadar kamu jadi lebih jujur, terbuka, dan mau improve bareng. Selama berkomitmen sama dia kamu ga ovt atau ribet sendiri karena dia jelas tahu apa yang dia mau — dia menjalin hubungan bukan buat main-main.
+
+[Negative/Gak cocok] Masalahnya bukan di pasangan kamu, tapi ada di kamu sendiri. Kamu belum siap buat hubungan yang serius, jadi hubungan ini biasanya cepat selesai dan ga bertahan lama.
+  </div>
+
+  <div class="section-subtitle">Self-Character :</div>
+  <div class="section-text">
+Kamu orang yang siap dengan segala hal, terstruktur, dan punya tujuan jelas. Kamu fleksibel dan terbuka.
+  </div>
+
+  <div class="section-subtitle">Career-Path :</div>
+  <div class="section-text">
+The World itu melambangkan kesuksesan yang stabil. Kamu orang yang terorganisir, jadi pekerjaan kamu cenderung selesai dengan baik dan sukses. Profesi yang cocok: agen travel, event organizer, dan project manager.
+  </div>
+</section>
+
+<!-- PANEL 8: The Emperor -->
+<section class="insight-panel" data-index="7" aria-label="The Emperor">
+  <div class="card-title">The Emperor</div>
+
+  <div class="card-image">
+  <img src="https://i.pinimg.com/736x/01/1f/6e/011f6e1603731844ab59600f2781b01e.jpg" alt="The Emperor Card"style="width:150px; height:auto;">
+</div>
+
+  <div class="section-subtitle">Love Interest :</div>
+  <div class="section-text">
+Pasangan [kamu] punya aura dan jiwa kepemimpinan yang kuat banget. Dia mendominasi dan kamu lebih submisif. Dia tipe yang protektif dan suka mengontrol demi kebaikan kamu — kadang bikin kamu merasa aman, tapi kadang juga terasa mengekang.
+  </div>
+
+  <div class="section-subtitle">Dampak&gt;</div>
+  <div class="section-text">
+[Positive/Cocok] Hubungan kalian jelas dan stabil. Walaupun pasangan kamu mengontrol atau mendominasi, kamu selalu merasa aman di dekat dia. Dia bisa diandalkan dan konsisten, jadi kamu bisa bergantung padanya.
+
+[Negative/Ga cocok] Kamu benci ketika pasangan kamu mengontrol kamu. Kamu merasa tidak bebas, tidak nyaman, dan tidak aman.
+  </div>
+
+  <div class="section-subtitle">Self-Character :</div>
+  <div class="section-text">
+Kamu itu disiplin, terstruktur, dan punya pendirian yang kuat. Kamu bukan orang yang suka drama dan lebih suka to the point — ga suka pembicaraan yang bertele-tele, maunya langsung ke intinya. Karena sifat ini, orang-orang jadi segan dan menghormati kamu.
+  </div>
+
+  <div class="section-subtitle">Career-Path :</div>
+  <div class="section-text">
+Karena kamu berprinsip kuat dan punya sifat mengontrol serta berkuasa, kamu cocok bekerja di bidang manajemen, pemerintahan, jadi CEO, atau membangun bisnis sendiri.
+  </div>
+</section>
+
+<!-- PANEL 9: The Lovers -->
+<section class="insight-panel" data-index="8" aria-label="The Lovers">
+  <div class="card-title">The Lovers</div>
+
+  <div class="card-image">
+  <img src="https://i.pinimg.com/736x/16/c6/c5/16c6c5e4e1eb6328e5fd6157f594c9f0.jpg" alt="The Lovers Card"style="width:150px; height:auto;">
+</div>
+
+  <div class="section-subtitle">Love Interest :</div>
+  <div class="section-text">
+Pasangan [kamu] ini tipe orang yang klik banget sama kamu, alias cocok banget, baik secara emosional, cara berpikir, maupun chemistry-nya, udah super duper cocok bangett. Pasangan [kamu] orang yang tulus, terbuka dan suka hubungan yang jujur, terbuka, dan hangat, kalo kamu lovelang-nya words of affirmation dan physical touch, fiks udah soulmate kalian.
+  </div>
+
+  <div class="section-subtitle">Dampak&gt;</div>
+  <div class="section-text">
+[Positive/Cocok] Hubungan kamu sama pasangan kamu tuh lancar-lancar aja karena komunikasi kalian kelas, bukan kode-kodean karena pasangan kamu orang yang berinisiatif. Selain itu, dia ga main-main sama kamu, dia beneran serius sama kamu, dia tahu apa yang dia mau dan ga plin-plan.
+
+[Negative/Ga Cocok] Kamu merasa pasangan kamu ga memprioritaskan kamu dan bikin kamu naik-turun, terkadang hubungannya intens banget kadang juga rendah banget kaya orang asing.
+  </div>
+
+  <div class="section-subtitle">Self-Character :</div>
+  <div class="section-text">
+Kamu tipe orang yang mengutamakan kenyamanan, hangat, dan harmonis bgt. Kamu peduli sama orang lain dan jago nge build up hubungan yang tadinya canggung jd deket banget alias kamu easy going, kamu punya empati yang tinggi makanya kamu sering jd penyeimbang suasana kalo lagi dingin-dinginnya, kamu ibaratnya matahari dehh.
+  </div>
+
+  <div class="section-subtitle">Career-Path :</div>
+  <div class="section-text">
+Karena kamu orang yang hangat dan bersosialisasi, kamu cocok di profesi yang ga jauh-jauh dari kolaborasi, partnership, dan kerja tim, kamu cocok banget jadi manajer, selain itu cocok jadi psikiater, HR, Consultant, bahkan Content Creator.
+  </div>
+</section>
+
+<!-- PANEL 10: The Magician -->
+<section class="insight-panel" data-index="9" aria-label="The Magician">
+  <div class="card-title">The Magician</div>
+
+  <div class="card-image">
+  <img src="https://i.pinimg.com/736x/23/e3/ad/23e3ad6f887fb949df1c534ad5c6b798.jpg" alt="The Magician Card"style="width:150px; height:auto;">
+</div>
+
+  <div class="section-subtitle">Love Interest :</div>
+  <div class="section-text">
+Pasangan [kamu] memiliki vibe yang kuat, karismatik, pintar, dan easy to love karena memiliki banyak kelebihan. Pasangan [kamu] tipe orang yang mudah mengubah situasi, baik membuat hubungan menjadi lebih intens dan terasa hidup, maupun bikin hidup kamu lebih challenging.
+  </div>
+
+  <div class="section-subtitle">Dampak&gt;</div>
+  <div class="section-text">
+[Positive/Cocok] kamu bisa berkembang menjadi manusia yang lebih baik karena pasangan kamu ambisius dan punya tujuan yang jelas, ia akan mengajak kamu tumbuh bareng.
+
+[Negative/Ga Cocok] Kamu merasa diri kamu terkekang karena pasangan kamu orang yang manipulatif dan love-bombing kamu di awal karena itu kamu gampang terpengaruh tanpa kamu sadari.
+  </div>
+
+  <div class="section-subtitle">Self-Character :</div>
+  <div class="section-text">
+[kamu] itu orang yang resourceful banget, kamu tahu apa yang kamu butuhkan dan kamu orang yang kreatif, cepat tangkap, tahu peluang, dan punya banyak soft-skill yang belum tentu bisa semua orang punya. Oleh karena itu, kamu sering menjadi “otak” dalam sebuah grup atau kerja kelompok, tetapi terkadang kamu terlalu perfeksionis dan jadi menghambat.
+  </div>
+
+  <div class="section-subtitle">Career-Path :</div>
+  <div class="section-text">
+[kamu] adalah problem solver yang baik dan cocok menjadi inovator, pekerjaan yang cocok untuk kamu memiliki skill kreativitas tinggi, kemampuan komunikasi yang baik, dan skill teknis khusus. Pekerjaan2 yang cocok adalah start up former, content creator, presenter, penghubung public relations. Beberapa pekerjaan ini adalah pekerjaan yang membutuhkan skill antara logika dan kreativitas, kamu memiliki keduanya.
+  </div>
+</section>
+
+</div> <!-- end carousel -->  
+
+<!-- NAV CONTROLS -->  
+<div class="nav-controls" aria-hidden="false">  
+  <button class="nav-btn" id="prevBtn" title="Prev">‹ Prev</button>  
+  <div class="dots" id="dots"></div>  
+  <button class="nav-btn" id="nextBtn" title="Next">Next ›</button>  
+</div>  
+
+<div class="mini-footer">Celyndra Tarot • More Insight</div>
+
+  </main>  <script>  
+  // Sticky navbar based on header image height  
+  const navbar = document.getElementById('navbar');  
+  const header = document.querySelector('.header-foto');  
+  window.addEventListener('scroll', () => {  
+    const headerHeight = header.offsetHeight || 160;  
+    if (window.scrollY >= headerHeight) navbar.classList.add('sticky');  
+    else navbar.classList.remove('sticky');  
+  });  
+  
+  // Carousel behavior + dots + prev/next  
+  const carousel = document.getElementById('carousel');  
+  const panels = Array.from(document.querySelectorAll('.insight-panel'));  
+  const prevBtn = document.getElementById('prevBtn');  
+  const nextBtn = document.getElementById('nextBtn');  
+  const dotsWrap = document.getElementById('dots');  
+  
+  // create dots  
+  panels.forEach((p, i) => {  
+    const d = document.createElement('div');  
+    d.className = 'dot' + (i===0 ? ' active' : '');  
+    d.dataset.index = i;  
+    d.setAttribute('role','button');  
+    d.setAttribute('aria-label','Go to slide ' + (i+1));  
+    dotsWrap.appendChild(d);  
+  });  
+  
+  const dots = Array.from(document.querySelectorAll('.dot'));  
+  
+  function scrollToPanel(index) {  
+    const target = panels[index];  
+    if (!target) return;  
+    const left = target.offsetLeft - ( (carousel.clientWidth - target.clientWidth) / 2 );  
+    carousel.scrollTo({ left, behavior: 'smooth' });  
+  }  
+  
+  prevBtn.addEventListener('click', () => {  
+    const idx = getCurrentPanelIndex();  
+    if (idx > 0) scrollToPanel(idx - 1);  
+  });  
+  nextBtn.addEventListener('click', () => {  
+    const idx = getCurrentPanelIndex();  
+    if (idx < panels.length - 1) scrollToPanel(idx + 1);  
+  });  
+  
+  dots.forEach(dot => {  
+    dot.addEventListener('click', (e) => {  
+      const i = Number(e.currentTarget.dataset.index);  
+      scrollToPanel(i);  
+    });  
+  });  
+  
+  // detect current panel (centered) while scrolling  
+  function updateActiveDot(){  
+    const center = carousel.scrollLeft + (carousel.clientWidth / 2);  
+    let activeIndex = 0;  
+    let minDistance = Infinity;  
+    panels.forEach((p, i) => {  
+      const panelCenter = p.offsetLeft + (p.clientWidth / 2);  
+      const dist = Math.abs(center - panelCenter);  
+      if (dist < minDistance) { minDistance = dist; activeIndex = i; }  
+    });  
+    dots.forEach((d, i) => d.classList.toggle('active', i === activeIndex));  
+  }  
+  
+  function getCurrentPanelIndex(){  
+    let idx = 0;  
+    dots.forEach((d,i) => { if (d.classList.contains('active')) idx = i; });  
+    return idx;  
+  }  
+  
+  carousel.addEventListener('scroll', () => { window.requestAnimationFrame(updateActiveDot); });  
+  
+  // keyboard navigation  
+  carousel.addEventListener('keydown', (e) => {  
+    if (e.key === 'ArrowRight') nextBtn.click();  
+    if (e.key === 'ArrowLeft') prevBtn.click();  
+  });  
+  
+  // initial focus for keyboard support  
+  carousel.setAttribute('tabindex','0');  
+  
+  // ensure active dot on load  
+  window.addEventListener('load', () => { updateActiveDot(); });  
+  window.addEventListener('resize', () => { updateActiveDot(); });  
+</script>  </body>  
+</html>
+
+<!-- ========== FOOTER ========== -->
+
+<style>
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.header-foto img {
+    width: 100%;
+    height: auto;
+    max-height:fit-content; /* Atur tinggi maksimum sesuai kebutuhan */
+    object-fit: cover; /* Agar gambar tetap proporsional */
+}
+
+h1 {
+    font-family: "Vollkorn", serif;
+    margin-top: 30px;   /* ubah ini */
+    margin-left: 170px; /* kalo mau */
+    margin-right: 170px;
+    margin-bottom: 0px; /* opsional */
+    color: #3A345B;
+}
+
+.container {
+    max-width: 1100px;   /* biar kontennya punya lebar pas */
+    margin: 0 150px;      /* AUTO = center kiri kanan */
+    padding: 20px;       /* jarak biar ga mepet */
+}
+
+.text-anjay {
+    font-size: 18px;
+    line-height: 1.7;
+    font-family: "Vollkorn", serif;
+    margin: 0 170px;
+    margin-top: 0px;
+    margin-bottom: 20px;
+}
+
+.text-anjay p {
+    margin-top: 0px;
+    margin-bottom: 20px;
+}
+
+
+/* --- BOX BESAR PEMBUNGKUS --- */
+
+.info-box {
+    position: relative;
+    background: #F3C8DD;
+    padding: 40px;
+    border-radius: 25px;
+    margin-left: 170px;
+    margin-right: 170px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    border: 2px solid #f8d4e8;
+}
+
+
+/* --- JUDUL DI DALAM BOX BESAR --- */
+.info-box-title {
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+    color: #3A345B;
+    margin-bottom: 25px;
+    margin-top: 0px;
+}
+
+/* --- CONTAINER LINK --- */
+.links {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+/* --- SETIAP KOLOM GAMBAR --- */
+.link-box {
+    width: 30%;
+    text-align: center;
+}
+
+/* --- GAMBAR --- */
+.link-box img {
+    width: 70%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+/* --- LINK TEXT --- */
+.link-box a {
+    display: block;
+    text-decoration: none;
+    font-size: 16px;
+    color: #3A345B;
+    margin-top: 10px;
+    font-weight: 600;
+}
+
+.link-box a:hover {
+    text-decoration: underline;
+}
+
+.info-box2 {
+    position: relative;
+    background: #F3C8DD;
+    padding: 25px;
+    border-radius: 15px;
+    margin: 60px 100px;
+    margin-left: 170px;
+    margin-right: 170px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+}
+
+.info-box-title2 {
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+    color: #3A345B;
+    margin-bottom: 25px;
+    margin-top: 0px;
+}
+
+.teks {
+    font-size: 18px;
+    line-height: 1.7;
+    font-family: "Vollkorn", serif;
+    margin: 0 50px;
+}
+
+.feature-section {
+    width: 90%;
+    margin: 80px auto 60px;
+    text-align: center;
+}
+
+.feature-title {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 25px;
+}
+
+.feature-row {
+    display: flex;
+    justify-content: center;
+    gap: 35px;
+    flex-wrap: wrap;
+}
+
+.feature-card {
+    background: #F3C8DD;
+    width: 280px;
+    padding: 35px 20px;
+    border-radius: 22px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.feature-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.22);
+}
+
+.feature-icon {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 15px;
+}
+
+.feature-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 50%;
+    background: transparent;
+    mix-blend-mode: darken; /* opsional: hilangin pinggiran putih */
+}
+
+
+.feature-card-title {
+    font-size: 20px;
+    color: #3A345B;
+    font-style: italic;
+}
+
+/* FOOTER */
+.footer {
+    background-color: #3A345B;
+    color: #F3C8DD;
+    padding: 40px 0;
+    margin-top: 50px;
+    font-family: "Times New Roman", serif;
+    font-style: none;
+}
+
+.footer-content {
+    width: 90%;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    font-style: normal;
+}
+
+.footer-image img {
+    width: 340px;
+    border-radius: 5px;
+}
+
+.footer-column h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: #F3C8DD;
+    font-family: "Vollkorn", serif;
+    font-style: italic;
+}
+
+.footer-column,
+.footer-column a {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #F3C8DD;
+    text-decoration: none;
+    font-style: normal;
+}
+
+.footer-column a:hover {
+    text-decoration: underline;
+    font-style: normal;
+}
+
+.p {
+    font-size: medium;
+    font-style: normal;
+}
+
+.about-img {
+    width: 250px;
+    height: 250px;
+    border-radius: 5px;
+}
+
+.about-text {
+    flex: 1;
+    font-size: 18px;
+    line-height: 1.7;
+    font-family: "Vollkorn", serif;
+    margin-top: 0;
+    margin-bottom: 0px;
+}
+
+/* Kotak thumbnail YouTube */
+.yt-thumb-square {
+    width: 250px;
+    height: 250px;
+    flex: 0 0 250px;  /* supaya tidak melar di flex */
+    border-radius: 5px;
+    overflow: hidden;
+    display: block;
+    position: relative;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+}
+
+.yt-thumb-square img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    background-color: black; /* optional biar ga ada ruang putih */
+}
+
+
+/* Overlay play button */
+.play-overlay {
+    position: absolute;
+    inset: 0;
+    background:rgba(0,0,0,0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease-in-out;
+}
+
+.play-icon {
+    font-size: 50px;
+    color: white;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.5);
+    transition: transform 0.2s ease-in-out;
+}
+
+
+/* Hover effect */
+.yt-thumb-square:hover .play-overlay {
+    background: rgba(0,0,0,0.45);
+}
+
+.yt-thumb-square:hover .play-icon {
+    transform: scale(1.15);
+}
+
+/* FOOTER - layout 3 kolom, centered headings, spacing rapi */
+.footer {
+  background-color: #3A345B;
+  color: #f9e6f0;
+  padding: 50px 0;
+  font-family: "Vollkorn", serif;
+}
+
+.footer-inner {
+  width: 90%;
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.footer-col {
+  flex: 1 1 0;
+  min-width: 180px;
+}
+
+.footer-col-left {
+  display: flex;
+  align-items: flex-start;
+}
+
+.footer-logo {
+  width: 340px;
+  max-width: 100%;;
+}
+
+.footer-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0 0 18px;
+  color: #F3C8DD;
+  font-style: normal;
+}
+
+.footer-links-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.footer-links-list li {
+  margin-bottom: 10px;
+}
+.footer-links-list a {
+  color: #F3C8DD;
+  text-decoration: none;
+  font-size: 16px;
+}
+.footer-links-list a:hover {
+  text-decoration: underline;
+}
+
+.footer-contact {
+  line-height: 1.8;
+  color: #F3C8DD;
+  font-size: 16px;
+  font-style: normal;
+}
+
+@media (max-width: 860px) {
+  .footer-inner {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+}
+.footer-contact a {
+    color: #F3C8DD !important; 
+    text-decoration: underline;
+    font-style: normal !important;
+    font-size: 16px;
+}
+.footer-contact a {
+    color: #F3C8DD;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.link-box {
+    width: 30%;
+    text-align: center;
+    transition: transform 0.25s ease, filter 0.25s ease;
+}
+
+.link-box:hover {
+    transform: translateY(-8px);
+    filter: brightness(1.08);
+}
+
+.link-box img {
+    border-radius: 15px;
+    transition: transform 0.3s ease;
+}
+
+.link-box:hover img {
+    transform: scale(1.03);
+}
+
+
+</style>
+
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-col footer-col-left">
+      <img src="https://i.pinimg.com/736x/11/c0/33/11c0338534b976e89de916808d1da7b2.jpg" alt="Tarot Image" class="footer-logo">
+    </div>
+
+    <div class="footer-col footer-col-center">
+      <h3 class="footer-title">Featured Link</h3>
+      <ul class="footer-links-list">
+        <li><a href="Celyndra Tarot - Home.html">Home</a></li>
+        <li><a href="about_us.html">About Us</a></li>
+        <li><a href="Celyndra Tarot - About Tarot.html">About Tarot</a></li>
+        <li><a href="Celyndra Tarot - FAQ.html">FAQ</a></li>
+        <li><a href="More Insight.html">More Insight</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col footer-col-right">
+    <h3 class="footer-title">Contact Us</h3>
+
+    <div class="footer-contact">
+        <p>
+            Fakultas Ilmu Pengetahuan Budaya<br>
+            Universitas Indonesia<br>
+            Jl. Prof. DR. Selo Soemardjan, Depok, Jawa Barat
+        </p>
+
+        <p class="email">
+            <a href="mailto:4minionsilpus@gmail.com">4minionsilpus@gmail.com</a>
+        </p>
+    </div>
+</div>
+
+</footer>
+
+<script>
+const navbar = document.getElementById("navbar");
+const header = document.querySelector(".header-foto");
+
+function checkSticky(){
+  const trigger = header ? header.offsetHeight : 0;
+  // jika sudah digulir lebih dari tinggi header -> sticky
+  if(window.scrollY >= trigger){
+    navbar.classList.add("sticky");
+  } else {
+    navbar.classList.remove("sticky");
+  }
+}
+
+window.addEventListener('scroll', checkSticky);
+window.addEventListener('resize', checkSticky);
+checkSticky();
+</script>
+
+  </body>
